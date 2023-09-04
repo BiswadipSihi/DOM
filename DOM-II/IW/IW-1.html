@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X UA Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+<style>
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+h1{
+    text-align: center;
+    color: green ;
+    font-size:50px ;
+    margin: 25px 0px;
+}
+.main{
+    /* border: 1px solid red; */
+    width: 25%;
+    height: 420px;
+    margin: auto;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 5px;
+}
+.main>div:first-child{
+    width: 88%;
+    height: 50px;
+    margin: auto;
+    margin-top: 35px;
+    border-radius: 7px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.main>div:last-child{
+    display: grid;
+    grid-template-columns: repeat(4,60px);
+    grid-template-rows: repeat(4,60px);
+    gap: 10px;
+    justify-content: center;
+    margin-top:18px ;
+}
+.main>div:last-child>div{
+    font-size: 21px;
+    font-weight: 700;
+    justify-content: center;
+    align-items: center;
+    display: grid;
+    border-radius: 9px;
+    box-shadow:  rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+#operator{
+    background-color: black;
+    color: white;
+}
+#delete{
+    background-color: red;
+    color: white;
+}
+.main>div:last-child>div:hover{
+    cursor: pointer;
+    background-color: white;
+}
+#operator:hover{
+    background-color: white;
+}
+</style>
+</head>
+<body>
+    <h1>Masai Calculator</h1>
+    <div class="main">
+    <div id="display"></div>
+        <div id=keyboard>
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+            <div id="operator">+</div>
+            <div>4</div>
+            <div>5</div>
+            <div>6</div>
+            <div id="operator">-</div>
+            <div>7</div>
+            <div>8</div>
+            <div>9</div>
+            <div id="operator">x</div>
+            <div id="delete">C</div>
+            <div>0</div>
+            <div id="operator">=</div>
+            <div id="operator">/</div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    let allDiv = document.querySelectorAll("#keyboard>div");
+    for (let i=0;i<allDiv.length;i++){
+        allDiv[i].addEventListener("click",mc)
+    }
+    let bag ="";
+    function  mc(event){
+        let btn = event.target.innerText;
+        if(btn=="C"){
+            bag="";
+            document.querySelector("#display").innerText="";
+        }else if(btn=="="){
+            document.querySelector("#display").innerText=eval(bag);
+        }else{
+            bag =bag+btn;
+            document.querySelector("#display").innerText=bag;
+        }
+    }
+    console.log(allDiv);
+</script>
