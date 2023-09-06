@@ -1,80 +1,151 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Min & Max</title>
-</head>
-<body>
-    <div id="display">MIN</div>
-    <div id="display">MAX</div>
-</body>
-</html> -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaderboard</title>
+    <title>Leader board</title>
     <style>
-        /* Add your CSS styles here to match the desired appearance */
-        /* Example styles for reference */
-        body {
-            font-family: Arial, sans-serif;
+        #minmaxl{
+            width: 24%;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+
         }
-        .container {
-            text-align: center;
-        }
-        #score {
-            font-size: 24px;
-            margin: 20px;
-        }
-        #min{
-            font-size: 18px;
-            background-color: red;
-        }
-        #max {
-            font-size: 18px;
-            background-color: green;
-        }
-        button {
-            font-size: 18px;
-            padding: 10px 20px;
-        }
-        #grid{
+        #main{
+            width: 20%;
+            margin: auto;
+            height: 400px;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            /* text-align: center; */
+            gap: 20px;
+            justify-content: center;
+            grid-template-columns: repeat(3,1fr);
+            grid-template-rows: repeat(6,1fr);
+            grid-template-areas: 
+            "dis dis dis"
+            "on tw th"
+            "fo fi si"
+            "se ei ni"
+            "zero ze none"
+            "en en en";
+        }
+        #main>div{
+            display: grid;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid;
+        }
+        #main>div:nth-child(1){
+            background-color: grey;
+            grid-area: dis;
+        }
+        #main>div:nth-child(2){
+            background-color: green;
+            grid-area: on;
+        }
+        #main>div:nth-child(3){
+            background-color: orange;
+            grid-area: tw;
+        }
+        #main>div:nth-child(4){
+            background-color: green;
+            grid-area: th;
+        }
+        #main>div:nth-child(5){
+            background-color: orange;
+            grid-area: fo;
+        }
+        #main>div:nth-child(6){
+            background-color: green;
+            grid-area: fi;
+        }
+        #main>div:nth-child(7){
+            background-color: orange;
+            grid-area: si;
+        }
+        #main>div:nth-child(8){
+            background-color: green;
+            grid-area: se;
+        }
+        #main>div:nth-child(9){
+            background-color: orange;
+            grid-area: ei;
+        }
+        #main>div:nth-child(10){
+            background-color: green;
+            grid-area: ni;
+        }
+        #main>div:nth-child(11){
+            background-color: purple;
+            grid-area: zero;
+        }
+        #main>div:nth-child(12){
+            background-color: black;
+            grid-area: en;
+        }
+        #minmax{
+            background-color: red;
+            
+        }
+        #main>div:last-child{
+            background-color: green;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div id="grid">
-            <input type="text" id="min" readonly>
-            <span>MAX</span>
-            <input type="text" id="max" readonly>
-            <span>MIN</span>
-            <br>
-            <span>SCORE</span>
-            <input type="text" id="score" readonly>
-            <br>
-            <button onclick="addToScore(1)">1</button>
-            <button onclick="addToScore(2)">2</button>
-            <button onclick="addToScore(3)">3</button>
-            <br>
-            <button onclick="addToScore(4)">4</button>
-            <button onclick="addToScore(5)">5</button>
-            <button onclick="addToScore(6)">6</button>
-            <br>
-            <button onclick="addToScore(7)">7</button>
-            <button onclick="addToScore(8)">8</button>
-            <button onclick="addToScore(9)">9</button>
-            <br>
-            <button onclick="addToScore(0)">0</button>
-            <button onclick="enterScore()">Enter</button>
-        </div>
+    <div id="minmaxl">
+        <div>MIN</div>
+        <div>MAX</div>
     </div>
-    </body>
-    </html>
+    <div id="minmax">
+        <div>50</div>
+        <div>100</div>
+    </div>
+    <h2>SCORE</h2>
+    <div id="main">
+        <div></div>
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+        <div>7</div>
+        <div>8</div>
+        <div>9</div>
+        <div>0</div>
+        <div>Enter</div>
+    </div>
+</body>
+</html>
+<script>
+   let btns = document.querySelectorAll("#main>div");
+   for(let i=1;i<btns.length;i++){
+    btns[i].addEventListener("click",MF);
+   }
+   let bag = "";
+   function MF(event){
+    let min = document.querySelector("#minmax>div:first-child").innerText;
+    min =+min;
+    let max = document.querySelector("#minmax>div:last-child").innerText;
+    max=+max;
+    let tn = event.target.innerText;
+
+    if(tn=="Enter"){
+        bag=+bag;
+        if(bag<min){
+            document.querySelector("#minmax>div:first-child").innerText=bag;  
+        }
+        if(bag>max){
+            document.querySelector("#minmax>div:last-child").innerText=bag;
+        }
+        bag = "";
+        document.querySelector("#minmax>div:first-child").innerText="";
+    }
+    else{
+        bag = bag+tn;
+        document.querySelector("#minmax>div:first-child").innerText=bag;
+    }
+   }
+
+</script>
