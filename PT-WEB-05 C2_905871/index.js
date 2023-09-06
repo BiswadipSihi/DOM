@@ -1,8 +1,8 @@
 // fill in javascript code here
 let myFrom = document.querySelector("form");
 let inName = document.getElementById("name");
-let inEmpoly = document.getElementById("employeeID");
-let inDepart = document.getElementById("department");
+let inDocId = document.getElementById("docID");
+let inDepart = document.getElementById("dept");
 let inExp = document.getElementById("exp");
 let inEmai = document.getElementById("email");
 let inMobi = document.getElementById("mbl");
@@ -19,11 +19,11 @@ myFrom.addEventListener("submit",function(e){
     } else if (experience >= 2 && experience <= 5) {
       role = "Junior";
     } else {
-      role = "Fresher";
+      role = "Trainee";
     }
     let Data = {
         input1 : inName.value,
-        input2 : inEmpoly.value,
+        input2 : inDocId.value,
         input3 : inDepart.value,
         input4 : inExp.value,
         input5 : inEmai.value,
@@ -43,6 +43,8 @@ myFrom.addEventListener("submit",function(e){
         let td7 = document.createElement("td");
         let td8 = document.createElement("td");
         let deB = document.createElement("button");
+        td8.id = "delete";
+        deB.id = "deleB"
         deB.addEventListener("click",function(){
           tr.innerHTML="";
           console.log("Hit")
@@ -65,3 +67,5 @@ myFrom.addEventListener("submit",function(e){
         tbody.append(tr);
     })
 })
+
+

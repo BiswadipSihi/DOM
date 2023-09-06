@@ -83,12 +83,14 @@
             background-color: black;
             grid-area: en;
         }
-        #minmax{
+        #minmax>div:first-child{
             background-color: red;
+            font-size: 50px;
             
         }
         #main>div:last-child{
             background-color: green;
+            grid-area: en;
         }
     </style>
 </head>
@@ -131,7 +133,7 @@
     max=+max;
     let tn = event.target.innerText;
 
-    if(tn=="Enter"){
+    if(tn=="ENTER"){
         bag=+bag;
         if(bag<min){
             document.querySelector("#minmax>div:first-child").innerText=bag;  
@@ -147,5 +149,4 @@
         document.querySelector("#minmax>div:first-child").innerText=bag;
     }
    }
-
 </script>
