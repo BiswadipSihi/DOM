@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONLINE BOOKSTORE</title>
+</head>
+<body>
+    <h1>ONLINE BOOKSTORE</h1>
+</body>
+</html>
+<script>
+    function Author(name,birthYear,nationality){
+        // let obj ={};
+        this.name = name;
+        this.birthYear = birthYear;
+        this.nationality=nationality;
+        // return obj;
+
+    }
+    function Book(title,author,genre,price){
+        // let obj={};
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+        this.price = price;
+        this.getBookInfo = function (){
+            console.log( "Title: ",this.title);
+            console.log("Author: ",this.author.name);
+            console.log("genre: ",this.genre);
+            console.log("price: ",this.price);
+        }
+        // return obj;
+    }
+    let author1 = new Author("Rabindranath Tagore",1861,"Indian");
+    let author2 = new Author("Robert Kiyosaki",1947,"Japanese");
+
+    let book1 = new Book ("Gitanjali",author1,"Poems",699);
+    let book2 = new Book ("Rich Dad Poor Dad",author2,"Financial",399)
+
+    // console.log(book1);
+    // console.log(book2);
+    // book1.getBookInfo();
+    // book2.getBookInfo();
+
+   let bookStore = [book1,book2];
+   for(let i = 0;i < bookStore.length; i++){
+      bookStore[i].getBookInfo();
+   }
+</script>

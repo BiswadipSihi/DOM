@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Account Management</title>
+</head>
+<body>
+    <h1>Bank Account Management</h1>
+</body>
+</html>
+<script>
+    function BankAccount(accountNumber,name,type,balance){
+        this.accountNumber =accountNumber;
+        this.name = name;
+        this.type = type;
+        this.balance = balance;
+        this.active = true;
+        this.deposit = function (amount){
+            if(amount>0){
+               this.balance += amount;
+                // console.log("Deposits the specified " ,amount ,"in the account")
+                console.log(`Deposits the specified ${amount}in the account. New Balance:${this.balance}`);
+            }
+            
+        }
+        this.withdraw = function (amount){
+            this.balance -= amount;
+            if(amount > 0 && amount<=this.balance && this.active == true){
+                // console.log("Withdraws the specified ",amount ,"from the account");
+                console.log(`Withdraw the specified ${amount}in the account. New Balance:${this.balance}`)
+            }else{
+                console.log("insufficient balance");
+            }  
+        }
+        this.checkBalance = function (){
+            console.log("Balance is: ", this.balance);
+        }
+        this.isActive = function (){
+            return this.active;
+        }
+    }
+
+
+    let account1 = new BankAccount(23214664516,"ram","saving",1000);
+    let account2 = new BankAccount(23145678945,"sam","saving",10000);
+    let account3 = new BankAccount(24800987654,"modhu","current",25000);
+
+
+    // account1.deposit(500);
+    // account2.deposit(5000);
+    // account3.deposit(2500)
+
+    // account1.withdraw(500);
+    // account2.withdraw(5000);
+    // account3.withdraw(2500);
+
+    // account1.checkBalance();
+    // account2.checkBalance();
+    // account3.checkBalance();
+
+    // account1.isActive();
+    // account2.isActive();
+    // account3.isActive();
+
+    function getTotalBalance(accounts){
+        let tB = 0;
+        for (let i=0;i<accounts.length;i++){
+            if(accounts[i].isActive()){
+              tB+= accounts[i].balance;
+            }
+        }
+        return tB;
+        
+    }
+    let arr =[account1,account2,account3];
+    console.log(getTotalBalance(arr));
+
+</script>
