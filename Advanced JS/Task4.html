@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUTOMOBILE INHERITANCE MODEL</title>
+</head>
+<body>
+    <h1 style="color: blue;">AUTOMOBILE INHERITANCE MODEL</h1>
+</body>
+</html>
+<script>
+//     Problem Statement :-
+// You have been appointed as senior developer in Tata’s R&D department. The engineers there are lazy, they don’t want to do everything from scratch whenever they create a new model. They expect you to help them create an inheritance model for the automobiles.
+
+// Description :-
+// Implement an inheritance model for four wheeler automobiles.
+// Implement using both object.create() and constructor functions().
+// Think of properties of what can be inherited.
+function automobiles(brand,model,speed,fuelType,numberOfSeats,numberOfWheels){
+    this.brand = brand;
+    this.model = model;
+    this.speed = speed;
+    this.fuelType =fuelType;
+    this.numberOfSeats = numberOfSeats;
+    this.numberOfWheels = numberOfWheels;
+}
+automobiles.prototype.accelerate = function (increase){
+    this.speed+=increase;
+    console.log(`speed is increased to ${this.speed}`);
+}
+automobiles.prototype.brake = function (decrease){
+    this.speed-=decrease;
+    console.log(`speed is decreased to ${this.speed}`);
+}
+automobiles.prototype.fuelType = function (){
+    console.log(`${this.model} is refulling`);
+}
+automobiles.prototype.honk = function (){
+    console.log(`${this.model} is honking`);
+}
+let blueprint = new automobiles("M&M","Thar",250,"Petrol",4,4);
+// console.log(blueprint.model);
+// blueprint.honk();
+
+
+
+
+
+function autodrive (brand,model,speed,fuelType,numberOfSeats,numberOfWheels,brakeType,){
+    automobiles.call(this,brand,model,speed,fuelType,numberOfSeats,numberOfWheels);
+    this.brakeType = brakeType;
+}
+autodrive.prototype = Object.create(automobiles.prototype);
+autodrive.prototype.selfDrive = function (){
+    console.log(`${this.model} driving by auto mode.`)
+}
+
+
+let autoCar = new autodrive("Audi","2022 Audi E-Tron",250,"Petrol",4,4,"Hydraulic disc",);
+// console.log(autoCar.fuelType);
+// autoCar.selfDrive();
+
+
+
+
+
+
+function electCar (brand,model,speed,fuelType,numberOfSeats,numberOfWheels,brakeType){
+    automobiles.call(this,brand,model,speed,fuelType,numberOfSeats,numberOfWheels);
+    this.brakeType = brakeType;
+}
+electCar.prototype = Object.create(automobiles.prototype);
+electCar.prototype.addAc = function (){
+    console.log(`${this.model} is on AC Mode.`)
+}
+
+
+let electCar1 = new electCar("Tesla","Tesla Model X",250,"Electric",4,4,"Rim disc",);
+console.log(electCar1.brakeType);
+electCar1.addAc()
+</script>
