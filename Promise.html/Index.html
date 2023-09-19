@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example</title>
+</head>
+<body>
+    <h1>Example of promise</h1>
+</body>
+</html>
+<script>
+  const promiseA = new Promise((resolve) => {
+  setTimeout(() => {
+    resolve('Task A');
+  }, 2000);
+});
+
+const promiseB = new Promise((resolve,reject) => {
+  setTimeout(() => {
+    reject('Task B failed');
+  }, 1000);
+});
+
+const promiseC = new Promise((resolve) => {
+  setTimeout(() => {
+    resolve('Task C');
+  }, 1500);
+});
+
+Promise.race([promiseA, promiseB, promiseC])
+  .then((result) => {
+    console.log('First task completed:', result);
+  })
+  .catch((error) => {
+    console.error('First task failed:', error);
+  });
+
+
+
+</script>

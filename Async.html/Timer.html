@@ -1,0 +1,122 @@
+<!-- Create a timer.html page
+Create input boxes which accepts time. (minutes, seconds and hours should be taken)
+have the following buttons start, pause, reset
+on start, the countdown should start
+on pause the timer should be pause
+on reset reset and stop the timer -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Timer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    #timer {
+      font-size: 36px;
+    }
+
+    input[type="number"] {
+      width: 50px;
+      font-size: 18px;
+    }
+
+    button {
+      font-size: 18px;
+      padding: 10px 20px;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Countdown Timer</h1>
+  
+  <div id="timer">00:00:00</div>
+
+  <label>Hours: <input type="number" id="hours" min="0" value="0"></label>
+  <label>Minutes: <input type="number" id="minutes" min="0" max="59" value="0"></label>
+  <label>Seconds: <input type="number" id="seconds" min="0" max="59" value="0"></label>
+  
+  <br>
+  
+  <button id="startBtn">Start</button>
+  <button id="pauseBtn">Pause</button>
+  <button id="resetBtn">Reset</button>
+
+  <script>
+    let timerInterval;
+    let timerRunning = false;
+    let hoursInput = document.getElementById('hours');
+    let minutesInput = document.getElementById('minutes');
+    let secondsInput = document.getElementById('seconds');
+    let timerDisplay = document.getElementById('timer');
+    let startButton = document.getElementById('startBtn');
+    let pauseButton = document.getElementById('pauseBtn');
+    let resetButton = document.getElementById('resetBtn');
+    
+    function startTimer() {
+      if (!timerRunning) {
+        let totalSeconds = parseInt(hoursInput.value) * 3600 + parseInt(minutesInput.value) * 60 + parseInt(secondsInput.value);
+        
+        if (totalSeconds > 0) {
+          timerRunning = true;
+          startButton.disabled = true;
+          pauseButton.disabled = false;
+          resetButton.disabled = false;
+
+          timerInterval = setInterval(updateTimer, 1000);
+
+          function updateTimer() {
+            if (totalSeconds <= 0) {
+              clearInterval(timerInterval);
+              timerRunning = false;
+              startButton.disabled = false;
+              pauseButton.disabled = true;
+            } else {
+              const hours = Math.floor(totalSeconds / 3600);
+              const minutes = Math.floor((totalSeconds % 3600) / 60);
+              const seconds = totalSeconds % 60;
+
+              let resetHours = hours < 10 ? "0" + hours : hours;
+              let resetMinutes = minutes < 10 ? "0" + minutes : minutes;
+              let resetSeconds = seconds < 10 ? "0" + seconds : seconds;
+
+
+              timerDisplay.textContent = `${resetHours}:${resetMinutes}:${resetSeconds}`;
+              totalSeconds--;
+
+              hoursInput.value = resetHours;
+              minutesInput.value = resetMinutes;
+              secondsInput.value = resetSeconds;
+            }
+          }
+        }
+      }
+    }
+
+    function pauseTimer() {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      startButton.disabled = false;
+      pauseButton.disabled = true;
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      startButton.disabled = false;
+      pauseButton.disabled = true;
+      hoursInput.value = '0';
+      minutesInput.value = '0';
+      secondsInput.value = '0';
+      timerDisplay.textContent = '00:00:00';
+    }
+
+    startButton.addEventListener('click', startTimer);
+    pauseButton.addEventListener('click', pauseTimer);
+    resetButton.addEventListener('click', resetTimer);
+  </script>
+</body>
+</html>

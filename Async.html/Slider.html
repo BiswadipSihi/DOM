@@ -1,0 +1,108 @@
+<!-- Create a slide show with at least 20 images (take some dummy images)
+There should be a button to stop the slide show and start the slide show (see if you can do both start and stop using single button)
+Provide a next and previous button below the slide show.
+On clicking the next or previous button the automatic slide show will stop
+And it will work as a normal slider -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLIDE SHOW</title>
+    <style>
+        .slideshow-container {
+            position: relative;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        /* Style for images in the slideshow */
+        .slideshow-image {
+            display: none;
+            max-width: 100%;
+            /* width: 100px; */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>SLIDE SHOW</h1>
+    <div class="slideshow-container">
+        <button class="pause-play" onclick="toggleSlideshow()">Play</button>
+        <button class="prev" onclick="plusSlides(-1)"> < </button>
+        <img class="slideshow-image" src="https://imgs.search.brave.com/5W7AHsPaJKKEa0sldORzG7ojJejOJAF3VPAXZlgBOfg/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9ha25z/LWltYWdlcy5lb25s/aW5lLmNvbS9lb2xf/aW1hZ2VzL0VudGly/ZV9TaXRlLzIwMTc3/MTcvcnNfMTAyNHg2/ODItMTcwODE3MDU0/MzMwLTEwMjQudGhv/ci1yYWduYXJvay44/MTcxNy5qcGc_Zml0/PWFyb3VuZHw3NzY6/NTE3Jm91dHB1dC1x/dWFsaXR5PTkwJmNy/b3A9Nzc2OjUxNztj/ZW50ZXIsdG9w" alt="Thor">
+        <img class="slideshow-image" src="https://imgs.search.brave.com/8YgQ373q_iRj9Vn893SlPt4jzj72pka3SFKa-fHVY54/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA0Lzk2Lzc1LzA3/LzM2MF9GXzQ5Njc1/MDc2NF96UFNsUVJH/ZE03UzZtNmJlVkNS/a0Y2cVNYSFd2bDlJ/Qi5qcGc" alt="Ironman">
+        <img class="slideshow-image" src="https://imgs.search.brave.com/8ZWBlj0dH0tqEKhdKnvd18_ofFT4QvJ4caHMGcjExA4/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzIwL2E4/LzI4LzIwYTgyOGY3/YzgwMTc0ZGM3Mzg4/ZjNjMDBhYmZiODRk/LmpwZw" alt="Spiderman">
+        <img class="slideshow-image" src="https://imgs.search.brave.com/pNlCk_r4E4Tqnfp3zUdNDb5odMiZDBN6OOh1c0PO3ls/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTU3/MjkyMDE4L3Bob3Rv/L3RpZ2VyLmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz1zSklT/X2xpeXJYS0dtV0Uw/NVIyMzhYTzY1ZlVK/YW51b3M0T1Bnandh/QU40PQ" alt="Tiger">
+        <img class="slideshow-image" src="https://imgs.search.brave.com/Q0T1ntvbj0Skfrm08nkoXmE7rr7Bflm-CE0fd7PIrnY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvQUEw/NDU0NzIvcGhvdG8v/dGlnZXIuanBnP3M9/NjEyeDYxMiZ3PTAm/az0yMCZjPUxzaFY3/RkQydlhNN3RYa0s0/N08tVjI4SUFOZEpH/RFFOdEt5NEduajBI/LVk9" alt="Tiger">
+        <img class="slideshow-image" src="https://imgs.search.brave.com/fzg_HnJmoMMfz7v64gGseBKi5YapUPo5cSgtyvLJyJM/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvNTE4/MjgyNzExL3Bob3Rv/L3RpZ2VyLmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz1LVVdi/VldjTGNRN1NJOTZM/VTZkNDFUeVgtVV8x/NVpzLV8yMWJZckdh/Y3ZrPQ" alt="Tiger">
+        <img class="slideshow-image" src="https://imgs.search.brave.com/pzNy5bNbTV_oRHdnr0WptYBX9Qxk4vRxQ8AXRc6k2Do/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzAyLzExLzc0Lzgx/LzM2MF9GXzIxMTc0/ODExM19mVUNhR3pa/SWRNazVKYWVocHlW/dHR3Vk1XYlBXVXRC/ei5qcGc" alt="Tiger">
+        <img class="slideshow-image" src="https://imgs.search.brave.com/lSa0e3GqAmq6NyLBRxO4lOMa9kN-Iq6hBDxiIY7PhpI/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvNTE4/Njg0ODQyL3Bob3Rv/L3doaXRlLXRpZ2Vy/LmpwZz9zPTYxMng2/MTImdz0wJms9MjAm/Yz16dGt0b1ZfSUVJ/aV9hSHdUVHJaelc4/UXZDNUFBa2ZzRDlZ/MHc5b0hEazVJPQ" alt="Tiger">
+        <img class="slideshow-image" src="https://imgs.search.brave.com/V-e7xxrt6rUZjfKIirjO40lRNfpLXLPal1QARrcIMTE/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTUz/OTAyODM1L3Bob3Rv/L3N1bWF0cmFuLXRp/Z2VyLmpwZz9zPTYx/Mng2MTImdz0wJms9/MjAmYz1XTE91RVpR/cXdFaTFwbGhxMHdR/T25uSWdKdllYaVZv/TXN1UjZTTUYtNWRB/PQ" alt="Tiger">
+        <img class="slideshow-image" src="https://imgs.search.brave.com/pNlCk_r4E4Tqnfp3zUdNDb5odMiZDBN6OOh1c0PO3ls/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTU3/MjkyMDE4L3Bob3Rv/L3RpZ2VyLmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz1zSklT/X2xpeXJYS0dtV0Uw/NVIyMzhYTzY1ZlVK/YW51b3M0T1Bnandh/QU40PQ" alt="Tiger">
+        <img class="slideshow-image" src="https://imgs.search.brave.com/8i03RFFFLNgPV97iqS7smeHhquyA2-T5RLQZbWWqISQ/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTE0/MTU1OTAxNC9waG90/by9sZWFwaW5nLXRp/Z2VyLWluLXRoZS1q/dW5nbGUuanBnP3M9/NjEyeDYxMiZ3PTAm/az0yMCZjPWtFUTdp/bWlVdmJqSktaQTI5/R3lNQkNEV3lQTjZC/WEZrUmlJSWpPOURv/aGc9" alt="Tiger">
+        <img class="slideshow-image" src="https://imgs.search.brave.com/pNlCk_r4E4Tqnfp3zUdNDb5odMiZDBN6OOh1c0PO3ls/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTU3/MjkyMDE4L3Bob3Rv/L3RpZ2VyLmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz1zSklT/X2xpeXJYS0dtV0Uw/NVIyMzhYTzY1ZlVK/YW51b3M0T1Bnandh/QU40PQ" alt="Tiger">
+        <img class="slideshow-image" src="https://imgs.search.brave.com/pNlCk_r4E4Tqnfp3zUdNDb5odMiZDBN6OOh1c0PO3ls/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTU3/MjkyMDE4L3Bob3Rv/L3RpZ2VyLmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz1zSklT/X2xpeXJYS0dtV0Uw/NVIyMzhYTzY1ZlVK/YW51b3M0T1Bnandh/QU40PQ" alt="Tiger">
+        <img class="slideshow-image" src="https://imgs.search.brave.com/ZG8snpwN39sNkh-Km4kzhbW-3GhqOb4s98QE7NpCuD8/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTM2/MjUzMDI0NC9waG90/by90aWdlci1ydW4t/YW5kLWF0dGFjay5q/cGc_cz02MTJ4NjEy/Jnc9MCZrPTIwJmM9/WG1lTWpVeWtyY3Qy/ZHUtejJnZmlPZk85/OVMxUXlqMGpoSDBX/M2t6dTFwcz0" alt="Tiger">
+        <img class="slideshow-image" src="https://imgs.search.brave.com/pNlCk_r4E4Tqnfp3zUdNDb5odMiZDBN6OOh1c0PO3ls/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTU3/MjkyMDE4L3Bob3Rv/L3RpZ2VyLmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz1zSklT/X2xpeXJYS0dtV0Uw/NVIyMzhYTzY1ZlVK/YW51b3M0T1Bnandh/QU40PQ" alt="Tiger">
+        <img class="slideshow-image" src="https://imgs.search.brave.com/pNlCk_r4E4Tqnfp3zUdNDb5odMiZDBN6OOh1c0PO3ls/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTU3/MjkyMDE4L3Bob3Rv/L3RpZ2VyLmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz1zSklT/X2xpeXJYS0dtV0Uw/NVIyMzhYTzY1ZlVK/YW51b3M0T1Bnandh/QU40PQ" alt="Tiger">
+        <img class="slideshow-image" src="https://imgs.search.brave.com/pNlCk_r4E4Tqnfp3zUdNDb5odMiZDBN6OOh1c0PO3ls/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTU3/MjkyMDE4L3Bob3Rv/L3RpZ2VyLmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz1zSklT/X2xpeXJYS0dtV0Uw/NVIyMzhYTzY1ZlVK/YW51b3M0T1Bnandh/QU40PQ" alt="Tiger">
+        <img class="slideshow-image" src="https://imgs.search.brave.com/pNlCk_r4E4Tqnfp3zUdNDb5odMiZDBN6OOh1c0PO3ls/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTU3/MjkyMDE4L3Bob3Rv/L3RpZ2VyLmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz1zSklT/X2xpeXJYS0dtV0Uw/NVIyMzhYTzY1ZlVK/YW51b3M0T1Bnandh/QU40PQ" alt="Tiger">
+        <img class="slideshow-image" src="https://imgs.search.brave.com/bRlTtBLgRNU9tIpQ_9fKOQLfWHa5JuYFJ0zF6YUJ5FE/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzAwLzEzLzQ2Lzg3/LzM2MF9GXzEzNDY4/NzU3X24yMWRLRWJa/NG1uT1NlTWNIV3Zz/TTluMFBFZWROa3cw/LmpwZw" alt="Tiger">
+        <img class="slideshow-image" src="https://imgs.search.brave.com/pNlCk_r4E4Tqnfp3zUdNDb5odMiZDBN6OOh1c0PO3ls/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTU3/MjkyMDE4L3Bob3Rv/L3RpZ2VyLmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz1zSklT/X2xpeXJYS0dtV0Uw/NVIyMzhYTzY1ZlVK/YW51b3M0T1Bnandh/QU40PQ" alt="Tiger">
+        <img class="slideshow-image" src="https://imgs.search.brave.com/pNlCk_r4E4Tqnfp3zUdNDb5odMiZDBN6OOh1c0PO3ls/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTU3/MjkyMDE4L3Bob3Rv/L3RpZ2VyLmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz1zSklT/X2xpeXJYS0dtV0Uw/NVIyMzhYTzY1ZlVK/YW51b3M0T1Bnandh/QU40PQ" alt="Tiger">
+        <button class="next" onclick="plusSlides(1)"> > </button>
+    </div>
+        
+</body>
+</html>
+<script>
+    let slideIndex = 0;
+    let slideshowInterval;
+    let slideshowRunning = true;
+    let slides = document.getElementsByClassName("slideshow-image");
+
+    showSlides();
+
+    function plusSlides(n) {
+        slideIndex += n;
+        showSlides();
+    }
+
+    function showSlides() {
+
+        if (slideIndex >= slides.length) {
+            slideIndex = 0;
+        }
+        if (slideIndex < 0) {
+            slideIndex = slides.length - 1;
+        }
+
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+
+        slides[slideIndex].style.display = "block";
+    }
+
+    function toggleSlideshow() {
+        if (slideshowRunning) {
+            clearInterval(slideshowInterval);
+            document.querySelector(".pause-play").textContent = "Pause";
+            slideshowRunning = false;
+        } else {
+            startSlideshow();
+        }
+    }
+
+    function startSlideshow() {
+        slideshowInterval = setInterval(() => {
+            plusSlides(1);
+        }, 2000); 
+        document.querySelector(".pause-play").textContent = "Play";
+        slideshowRunning = true;
+    }
+
+    
+    startSlideshow();
+</script>
