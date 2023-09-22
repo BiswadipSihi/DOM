@@ -1,0 +1,160 @@
+<!-- Problem Statement :-
+You have recently taken a McDonald’s franchise. You, being a software developer, want to design a virtual food ordering system to handle the orders coming in. Users should be able to place orders through it. Whenever one order is complete, it should be visible on the screen with the order number.
+
+Description :-
+Create a button called 'Order Food'. Create a checkbox of multiple food items you can choose from.
+When a user clicks on order food, create a promise that will resolve after random seconds.
+Once the promise is resolved, show the image of the food in the centre and show the order id on the top right corner.
+Try to make your virtual restaurant as real as possible. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIRTUAL MCDONALD'S</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #cont {
+            text-align: center;
+            margin: 20px;
+        }
+
+        #foodItems {
+            margin-top: 20px;
+        }
+
+        .orderDetails {
+            margin-top: 20px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #ffffff;
+            padding: 10px;
+        }
+        .foodImage {
+            position: relative;
+            width: 100%;
+            height: 100%; 
+            border: 1px solid #ccc; 
+        }
+
+        .foodImage img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div id="cont">
+        <h1>VIRTUAL MCDONALD'S FOOD RESTAURANT</h1>
+        <div id="foodItems">
+            <input type="checkbox" name="foodItem" value="Burger" id="burgerCheckbox">
+            <label for="burgerCheckbox">Burger</label>
+            <br>
+            <input type="checkbox" name="foodItem" value="Pizza" id="pizzaCheckbox">
+            <label for="pizzaCheckbox">Pizza</label>
+            <br>
+            <input type="checkbox" name="foodItem" value="Pasta" id="pastaCheckbox">
+            <label for="pastaCheckbox">Pasta</label>
+            <br>
+            <input type="checkbox" name="foodItem" value="Biriyani" id="biriyaniCheckbox">
+            <label for="biriyaniCheckbox">Biriyani</label>
+        </div>
+        <br>
+        <br>
+        <button id="orderButton">Order Food</button>
+    </div>
+    <div class="orderDetails"></div>
+    <img class="foodImage" src="" alt="Food Image">
+    
+    <script>
+        let ordButton = document.querySelector("#orderButton");
+        let foodImage = document.querySelector(".foodImage");
+        
+        ordButton.addEventListener("click", function () {
+            let foods = document.querySelectorAll("input[type='checkbox']:checked");
+
+            if(foods.length === 0){
+                alert("Please select any food item");
+                return;
+            }
+            let flag = true;
+
+            createOrder(foods)
+            .then((order)=>{
+                showOrder(order);
+                flag = false;
+            })
+            .catch((error)=>{
+                console.log("An error occurred during order processing:", error);
+                flag= false;
+            });
+        });
+
+        //  order id --->
+        function generateOrderId (id){
+            return Math.floor(Math.random() * 1000);
+        }
+        // list of food
+        function getRandomFood(list){
+            let randomFood = Math.floor(Math.random() * list.length);
+            return list[randomFood].value;
+        }
+
+        // food image
+        function image(food){
+            let foodImages = {
+                Burger : `https://imgs.search.brave.com/HgWCVVvtOLIL46FjsEQYT85pcuHzciydAHBG4XzU9OY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTMz/NzQ4MTA2MC9waG90/by9idXJnZXJzLW9u/LXRoZS13b29kZW4t/Ym9hcmQuanBnP3M9/NjEyeDYxMiZ3PTAm/az0yMCZjPW1VSEIx/MExDaFVZbnpnZ01u/S2dVQXpTa0ZGUGg2/MDZHTGUxZzI3U3Bj/REU9`,
+                Pizza : `https://imgs.search.brave.com/Id8xA3NMlvy_vsuElBnRyZXy7CW5wdVFe1W6oUhlKHw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzAxLzAzLzA4LzYz/LzM2MF9GXzEwMzA4/NjM3MV9DWkZmOVMy/VDk1a2dHc2xHOTc0/MUFYZmxWU0l1akFr/bC5qcGc`,
+                Pasta : `https://imgs.search.brave.com/u7n5a7Lesqf8QB1JYg7fp57oo7Zhg6CAPEuIW39taK4/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTM1/Mjg1NTM0Ny9waG90/by9pdGFsaWFuLXNl/YWZvb2QtcGFzdGEu/anBnP3M9NjEyeDYx/MiZ3PTAmaz0yMCZj/PTFVakFWMjFCT0xh/c2ZQcjdOYjdpYkpJ/aEFJUHN1TVJiaDcw/MEtzYWlhU009`,
+                Biriyani : `https://imgs.search.brave.com/ACj1Z5yVe8pyIARSVvK7jx0PNdWyxJcknaUjVE9qZx8/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA0LzU5LzI3Lzg4/LzM2MF9GXzQ1OTI3/ODg5NF85MmVTbGVq/blI3TlN3SlJDYlZ5/eTlaWmliU21qYkY4/cS5qcGc`,
+            };
+            return foodImages[food] || '';
+        }
+
+        // random time 
+        function randomTime(){
+            return Math.floor(Math.random() * 3000) + 2000;
+        }
+
+        // show the order
+        function showOrder(order){
+            let orderDetails = document.querySelector(".orderDetails");
+            orderDetails.innerHTML = "";
+
+            let orderMessage = document.createElement("p");
+            orderMessage.innerText = `Your order (${order.food}) with Order ID ${order.orderId} is ready!`;
+            orderDetails.append(orderMessage);
+            if(order.imageSrc) {
+                foodImage.src = order.imageSrc;
+                foodImage.style.display = "block";
+            } else {
+                foodImage.style.display = "none";
+            }
+
+            let orderIdElement = document.createElement("p");
+            orderIdElement.innerText = `Order ID: ${order.orderId}`;
+            orderIdElement.className = "orderId";
+            orderDetails.append(orderIdElement);
+        }
+
+        function createOrder(foods){
+            return new Promise ((resolve, reject) => {
+                setTimeout(function (){
+                    let orderId = generateOrderId();
+                    let selectedFood = getRandomFood(foods);
+                    let foodImageSrc = image(selectedFood);
+                    resolve({ orderId: orderId, food: selectedFood, imageSrc: foodImageSrc });
+                }, randomTime());
+            });
+        }
+    </script>
+</body>
+</html>

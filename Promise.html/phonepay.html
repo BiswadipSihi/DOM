@@ -1,0 +1,148 @@
+<!-- Mimic the payment system of phonePe using promises.
+The payment can be rejected or accepted
+On success show the same UI as shown on phonePe app.
+On Failure also show the same UI as shown on phonePe app.
+During the processing state show the Processing UI as shown on phonePe. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PhonePe Payment</title>
+  <style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+#payment-ui {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+h1 {
+  font-size: 24px;
+  color: #007bff;
+  margin-bottom: 20px;
+}
+
+input[type="number"],
+input[type="text"],
+button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+#processing-ui,
+#success-ui,
+#failure-ui {
+  display: none;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+#processing-ui {
+  background-color: #ffd700;
+  color: #333;
+}
+
+#success-ui {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+#failure-ui {
+  background-color: #f44336;
+  color: #fff;
+}
+
+  </style>
+</head>
+<body>
+  <div id="payment-ui">
+    <h1>BISWADIP'S</h1>
+    <h1>PhonePe Payment App</h1>
+    <input type="number" id="amount-input" placeholder="Enter amount">
+    <input type="text" id="recipient-input" placeholder="Enter recipient">
+    <button id="pay-button">Pay</button>
+    <div id="processing-ui" style="display: none;">Processing...</div>
+    <div id="success-ui" style="display: none;">Payment successful!</div>
+    <div id="failure-ui" style="display: none;">Payment failed.</div>
+  </div>
+
+  <script>
+        const payButton = document.getElementById("pay-button");
+        const processingUI = document.getElementById("processing-ui");
+        const successUI = document.getElementById("success-ui");
+        const failureUI = document.getElementById("failure-ui");
+
+
+        function acceptPayment(paymentDetails) {
+            return new Promise((resolve, reject) => {
+              setTimeout(() => {
+                  if (Math.random() < 0.5) {
+                     resolve(paymentDetails);
+                    } else {
+                         reject("Payment failed");
+                        }
+                }, 2000);
+            });
+        }
+
+    
+
+        payButton.addEventListener("click", () => {
+            const amount = parseFloat(document.getElementById("amount-input").value);
+            const recipient = document.getElementById("recipient-input").value;
+      
+            // Display processing UI
+            processingUI.style.display = "block";
+            successUI.style.display = "none";
+            failureUI.style.display = "none";
+
+            // Start the payment process
+            acceptPayment({ amount, recipient })
+            .then(() => {
+                processingUI.style.display = "none";
+                successUI.style.display = "block";
+                failureUI.style.display = "none";
+            })
+            .catch(() => {
+                processingUI.style.display = "none";
+                successUI.style.display = "none";
+                failureUI.style.display = "block";
+            });
+        });
+  </script>
+</body>
+</html>
