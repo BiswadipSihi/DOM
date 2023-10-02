@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arrow Function</title>
+</head>
+<body>
+    <h1>Using arrow Function</h1>
+</body>
+</html>
+<script>
+const lowerCase = (char) => char.toLowerCase();
+const strings = (word) => word.split('').map(lowerCase).join('');
+const arrayToLowerCase = (arr) => arr.map(strings);
+const inputArray = ["MA", "SA", "I", "SCH", "OOL"];
+const outputArray = arrayToLowerCase(inputArray);
+console.log(outputArray);
+
+</script>

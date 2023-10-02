@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Counter</title>
+</head>
+<body>
+    <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    #count {
+      font-size: 36px;
+      font-weight: bold;
+      color: #007BFF;
+    }
+
+    button {
+      font-size: 18px;
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+    </style>
+  <h1>Counter</h1>
+  <p>Count: <span id="count">0</span></p>
+  <button id="toggleButton">Start</button>
+  <button id="incrementButton">Increment</button>
+  <button id="decrementButton">Decrement</button>
+
+  <script>
+    class Counter {
+      constructor() {
+        this.count = 0;
+        this.intervalId = null;
+        this.autoIncrement = true;
+        this.incrementButton = document.getElementById("incrementButton");
+        this.decrementButton = document.getElementById("decrementButton");
+        this.toggleButton = document.getElementById("toggleButton");
+        this.countDisplay = document.getElementById("count");
+
+        this.toggleButton.addEventListener("click", () => this.toggleCounter());
+        this.incrementButton.addEventListener("click", () => this.increment());
+        this.decrementButton.addEventListener("click", () => this.decrement());
+      }
+
+      toggleCounter() {
+        if (this.autoIncrement) {
+          this.autoIncrement = false;
+          this.toggleButton.textContent = "Start";
+          this.stopCounter();
+        } else {
+          this.autoIncrement = true;
+          this.toggleButton.textContent = "Stop";
+          this.startCounter();
+        }
+      }
+
+      startCounter() {
+        this.intervalId = setInterval(() => {
+          this.count++;
+          this.updateDisplay();
+        }, 1000);
+      }
+
+      stopCounter() {
+        clearInterval(this.intervalId);
+      }
+
+      increment() {
+        if (!this.autoIncrement) {
+          this.count++;
+          this.updateDisplay();
+        }
+      }
+
+      decrement() {
+        if (!this.autoIncrement) {
+          this.count--;
+          this.updateDisplay();
+        }
+      }
+
+      updateDisplay() {
+        this.countDisplay.textContent = this.count;
+      }
+    }
+
+    const counter = new Counter();
+    counter.startCounter();
+  </script>
+</body>
+</html>
