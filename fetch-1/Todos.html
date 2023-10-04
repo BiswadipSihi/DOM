@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Todos</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="todosTableBody"></tbody>
+    </table>
+
+    <script>
+        let URL = 'https://jsonplaceholder.typicode.com/todos';
+        // fetch(URL)
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         const todosTableBody = document.getElementById('todosTableBody');
+
+        //         data.forEach(todo => {
+        //             const row = document.createElement('tr');
+        //             row.innerHTML = `
+        //                 <td>${todo.id}</td>
+        //                 <td>${todo.title}</td>
+        //                 <td>${todo.completed ? 'Completed' : 'Incomplete'}</td>
+        //             `;
+        //             todosTableBody.append(row);
+        //         });
+        //     })
+        //     .catch(error => console.error('Error fetching data:', error));
+        async function fetchTodos() {
+            try {
+                const response = await fetch(URL);
+                const data = await response.json();
+                const todosTableBody = document.getElementById('todosTableBody');
+
+                data.forEach(todo => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${todo.id}</td>
+                        <td>${todo.title}</td>
+                        <td>${todo.completed ? 'Completed' : 'Incomplete'}</td>
+                    `;
+                    todosTableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        fetchTodos();
+    </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FETCH SCHOLAR</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    h1 {
+        text-align: center;
+    }
+    #sort-label {
+        margin-right: 10px;
+    }
+    select {
+        padding: 5px;
+    }
+    #search {
+        margin-bottom: 10px;
+        padding: 5px;
+        width: 100%;
+    }
+    .card {
+        border: 1px solid #ccc;
+        margin: 10px;
+        padding: 10px;
+        background-color: #f9f9f9;
+    }
+    .card h2 {
+        margin: 0;
+        font-size: 18px;
+    }
+    .card p {
+        margin: 5px 0;
+    }
+</style>
+<body>
+    <h1>Product list</h1>
+
+    <label for="sort-select">Sort by:</label>
+    <select id="sort">
+        <option value="default">Default</option>
+        <option value="price-low">Price (Low to High)</option>
+        <option value="price-high">Price (High to Low)</option>
+    </select>
+
+    <input type="text" id="search" placeholder="Search by product name">
+    <div id="main"></div>
+</body>
+</html>
+<script>
+    const display = document.getElementById('main');
+    const sortSelect = document.getElementById('sort');
+    const searchInput = document.getElementById('search');
+    const URL = 'https://fakestoreapi.com/products';
+    let products = [];
+
+    async function fetchAndDisplayProducts() {
+        try {
+            const response = await fetch(URL);
+            products = await response.json();
+            displayProducts(products);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    function displayProducts(data) {
+        display.innerHTML = ''; 
+
+        data.forEach(product => {
+            let productCard = document.createElement("div");
+            productCard.className = "card";
+            productCard.innerHTML = `
+                <h2>${product.title}</h2>
+                <p>Price: $${product.price}</p>
+                <p>Category: ${product.category}</p>
+            `;
+            display.append(productCard);
+        });
+    }
+
+    function sortProducts(products, sortType) {
+        if (sortType === 'price-low') {
+            return products.sort((a, b) => a.price - b.price);
+        } else if (sortType === 'price-high') {
+            return products.sort((a, b) => b.price - a.price);
+        }
+        return products;
+    }
+
+    sortSelect.addEventListener('change', () => {
+        const selectedSort = sortSelect.value;
+        const sortedProducts = sortProducts(products, selectedSort);
+        displayProducts(sortedProducts);
+    });
+
+
+    searchInput.addEventListener('input', () => {
+    const searchQuery = searchInput.value.trim().toLowerCase();
+    const productCards = display.querySelectorAll('.card');
+    productCards.forEach(card => {
+        const title = card.querySelector('h2').textContent.toLowerCase();
+        if (title.includes(searchQuery)) {
+                 card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+    
+    fetchAndDisplayProducts();
+</script>
