@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Custom Array</title>
+  </head>
+  <body>
+    <h1>Custom Array</h1>
+    <script>
+      function CustomArray() {
+        this.size = arguments.length;
+        for (let i = 0; i < arguments.length; i++) {
+          this[i] = arguments[i];
+        }
+      }
+
+      CustomArray.prototype.push = function (element) {
+        this[this.size] = element;
+        this.size++;
+      };
+
+      CustomArray.prototype.pop = function () {
+        if (this.size === 0) {
+          return undefined;
+        }
+        const removedElement = this[this.size - 1];
+        delete this[this.size - 1];
+        this.size--;
+        return removedElement;
+      };
+
+      CustomArray.prototype.top = function () {
+        if (this.size === 0) {
+          return undefined;
+        }
+        return this[this.size - 1];
+      };
+
+      CustomArray.prototype.print = function () {
+        const elements = [];
+        for (let i = 0; i < this.size; i++) {
+          elements.push(this[i]);
+        }
+        console.log(`${elements.join(",")}`);
+      };
+
+      CustomArray.prototype.printReverse = function () {
+        const elements = [];
+        for (let i = this.size - 1; i >= 0; i--) {
+          elements.push(this[i]);
+        }
+        console.log(`[${elements.join(",")}]`);
+      };
+
+
+
+      const stack = new CustomArray(1, 2, 3, 4);
+      stack.push(5);
+      stack.print();
+      stack.pop();
+      stack.print();
+      stack.printReverse();
+      console.log(stack.size);
+      console.log(stack.top());
+    </script>
+  </body>
+</html>

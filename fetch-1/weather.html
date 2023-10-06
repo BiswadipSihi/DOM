@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" id="cityInput" placeholder="Enter a city">
+            <button onclick="getWeather()">Search</button>
+        </div>
+        <div class="weather-details">
+        </div>
+        <div class="map">
+            <iframe id="map" width="400" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script>
+        function getWeather() {
+            const apiKey = 'bfc93f85f11db4e7532b2838b06a7a6f'
+;
+            const city = document.getElementById('cityInput').value;
+            const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const minTemp = data.main.temp_min;
+                    const maxTemp = data.main.temp_max;
+                    const windSpeed = data.wind.speed;
+                    const clouds = data.clouds.all;
+                    const sunrise = data.sys.sunrise;
+                    const sunset = new Date(data.sys.sunset * 1000).toLocaleTimeString();
+
+
+                    const weatherDetails = `
+                        <h2>${city} Weather</h2>
+                        <p>Min Temp: ${minTemp}°C</p>
+                        <p>Max Temp: ${maxTemp}°C</p>
+                        <p>Wind Speed: ${windSpeed} m/s</p>
+                        <p>Cloudiness: ${clouds}%</p>
+                        <p>Sunrise: ${sunrise}</p>
+                        <p>Sunset: ${sunset}</p>
+                    `;
+                    document.querySelector('.weather-details').innerHTML = weatherDetails;
+
+                    
+                    const mapUrl = `https://www.google.com/maps/embed/v1/place?key=AIzaSyCND1yRRN-ZwLeqf2mNF8UmXLg12zWPjzQ&q=${city}`;
+                    document.getElementById('map').src = mapUrl;
+                })
+                .catch(error => console.error('Error fetching weather data: ', error));
+        }
+    </script>
+</body>
+</html>
+
+
