@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather1</title>
+    <style>
+        *{
+            text-align: center;
+            font-family: sans-serif;
+            align-items: center;
+        }
+        #cityInp{
+            border: 3px solid black;
+            font-size: 20px;
+            border-radius: 10px;
+            margin-top: 100px;
+        }
+        #buttonLogo{
+            width: 20px;
+        }
+        #search{
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+        }
+        #container{
+            height: auto;
+            width: 80%;
+            /* border: 1px solid red; */
+            margin: auto;
+            margin-top: 50px;
+            display: flex;
+            justify-content:space-between;
+            margin-bottom: 50px;
+        }
+        #dataCity{
+            /* border: 1px solid blue; */
+            width: 47%;
+            height: 100%;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+            background-color: yellowgreen;
+        }
+        #cityMap{
+            /* border: 1px solid blue; */
+            width: 47%;
+            height: 100%;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+        }
+        .icon{
+            display: flex;
+            margin-left: 10px;
+            margin-bottom: 10px;
+        }
+        .logos{
+            width: 50px;
+        }
+        
+    </style>
+</head>
+<!-- Accept a city name and find the weather data for that city
+
+Show the map of that entered city on right hand side
+
+Show the weather details of that city on Left hand side. Show min temp, max temp, wind, clounds, sunrise, sunset etc.
+
+Use logos or icons while showing the data. ( you can show logo of sunrise, sunset etc ) Searchbar should be on top.
+
+For Weather data use - https://openweathermap.org/api (Links to an external site.)
+
+For Maps - https://developers.google.com/maps/documentation/embed/get-started (Links to an external site.) OR :- Use this:- https://www.embedgooglemap.net/
+
+For Creating Google Maps API Key - https://developers.google.com/maps/documentation/embed/get-api-key -->
+<!-- 2880 Broadway, New York -->
+<body>
+    <label for="cityInp">Search Your City:</label>
+    <input type="text" id="cityInp" placeholder="search city">
+    <button id="search"><img src="https://cdn-icons-png.flaticon.com/128/151/151773.png" alt="" id="buttonLogo" onclick="searchYourCityClimate()"></button>
+    <div id="container">
+        <div id="dataCity"></div>
+        <div id="cityMap">
+            <div class="mapouter">
+                <div class="gmap_canvas">
+                    <iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+                    </iframe>
+                    <br>
+                    <style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}</style>
+                    <a href="https://www.embedgooglemap.net">embed google map on website</a>
+                    <style>.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}
+                    </style>
+                    </div>
+                </div>
+        </div>
+    </div>
+</body>
+<script>
+    let searchBtn = document.querySelector("#search");
+    searchBtn.addEventListener("click", function(){
+        let cityInputElement = document.querySelector("#cityInp").value;
+        let iframeCity = document.querySelector("#gmap_canvas");
+        iframeCity.src = `https://maps.google.com/maps?q=${cityInputElement}&t=&z=13&ie=UTF8&iwloc=&output=embed`
+    })
+
+    async function searchYourCityClimate(){
+        try {
+            let cityInputElement = document.querySelector("#cityInp").value;
+            let res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityInputElement}&appid=d65dcca6fcfdef690ff9957e0561fb39`);
+            let data = await res.json();
+            printData(data)
+        } catch (error) {
+            console.log("Data not found")
+        }
+    }
+
+    let displayYourData = document.querySelector("#dataCity");
+    
+    function printData(data){
+            displayYourData.textContent = "";
+            let weatherCard = document.createElement("div");
+
+            let cityName = document.createElement("p");
+            cityName.textContent = "City Name: " + data.name;
+
+            let cityMinTemp = document.createElement("p");
+            cityMinTemp.textContent = "Minimum Temperatue: " + data.main.temp_min;
+            let cityMinTempLogo = document.createElement("img");
+            cityMinTempLogo.src = "https://cdn-icons-png.flaticon.com/128/2322/2322701.png";
+            cityMinTempLogo.className = "logos";
+            let minTempCard = document.createElement("div");
+            minTempCard.className = "icon"
+            minTempCard.append(cityMinTempLogo, cityMinTemp);
+
+            let cityMaxTemp = document.createElement("p");
+            cityMaxTemp.textContent = "Maximum Temperature: " + data.main.temp_max;
+            let cityMaxTempLogo = document.createElement("img");
+            cityMaxTempLogo.src = "https://cdn-icons-png.flaticon.com/128/1684/1684426.png";
+            cityMaxTempLogo.className = "logos";
+            let maxTempCard = document.createElement("div");
+            maxTempCard.className = "icon"
+            maxTempCard.append(cityMaxTempLogo, cityMaxTemp);
+
+            let citySunRise = document.createElement("p");
+            citySunRise.textContent = "SunRise at: " + data.sys.sunrise;
+            let citySunRiseLogo = document.createElement("img");
+            citySunRiseLogo.src = "https://cdn-icons-png.flaticon.com/128/8098/8098355.png";
+            citySunRiseLogo.className = "logos";
+            let sunRiseCard = document.createElement("div");
+            sunRiseCard.className = "icon"
+            sunRiseCard.append(citySunRiseLogo, citySunRise);
+
+            let citySunSet = document.createElement("p");
+            citySunSet.textContent = "SunSet at: " + data.sys.sunset;
+            let citySunSetLogo = document.createElement("img");
+            citySunSetLogo.src = "https://cdn-icons-png.flaticon.com/128/8098/8098358.png";
+            citySunSetLogo.className = "logos";
+            citySunsetCard = document.createElement("div");
+            citySunsetCard.className = "icon"
+            citySunsetCard.append(citySunSetLogo, citySunSet);
+
+            let cityWind = document.createElement("p");
+            cityWind.textContent = "Wind Speed: " + data.wind.speed;
+            let CityWindLogo = document.createElement("img");
+            CityWindLogo.src = "https://cdn-icons-png.flaticon.com/128/2011/2011448.png";
+            CityWindLogo.className = "logos";
+            cityWindCard = document.createElement("div");
+            cityWindCard.className = "icon"
+            cityWindCard.append(CityWindLogo, cityWind);
+
+            let weatherIcon = document.createElement("div");
+            weatherIcon.className = "icon"
+            let cityWeatherLogo = document.createElement("img");
+            cityWeatherLogo.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+            
+            let cityWeather = document.createElement("p");
+            cityWeather.textContent = data.weather[0].description;
+
+            weatherIcon.append(cityWeatherLogo, cityWeather)
+            weatherCard.append(cityName, minTempCard, maxTempCard, sunRiseCard, citySunsetCard, cityWindCard, weatherIcon);
+            displayYourData.append(weatherCard);
+    }
+</script>
+</html>
