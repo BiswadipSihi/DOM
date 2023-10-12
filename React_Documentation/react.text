@@ -1,0 +1,52 @@
+(1)What is React?
+=> React is a JavaScript library - one of the most popular ones
+React is not a framework (unlike Angular, which is more opinionated).
+React is an open-source project created by Facebook.
+React is used to build user interfaces (UI) on the front end.
+React is the view layer of an MVC application (Model View Controller)
+One of the most important aspects of React is the fact that you can create components, which are like custom, reusable HTML elements, to quickly and efficiently build user interfaces. React also streamlines how data is stored and handled, using state and props.
+
+
+(2)who made react?
+=> React was created by Jordan Walke, a software engineer at Facebook.
+
+
+(3)What is babel?
+=> Babel is an open-source JavaScript compiler or transpiler. Its primary purpose is to transform ES6 JavaScript code into a backward-compatible version of JavaScript that can run in older JavaScript engines and browsers that do not support the latest language features. 
+
+
+(4)How does Babel convert html code in React into valid code?
+=> Babel doesn't directly convert HTML code into React code. instead, it transpiles JSX (JavaScript XML) code into regular JavaScript. JSX is a syntax extension for JavaScript used by React to define the structure and layout of components. it's work like innerHtml, like--const element = <h1>#Biswadip Sihi</h1>;
+
+
+(5)What is ReactDOM used for? Write an example?
+=> ReactDOM is a JavaScript library that is commonly used in conjunction with React, a popular front-end library for building user interfaces. ReactDOM specifically focuses on the task of rendering React components to the DOM (Document Object Model) of a web page. It is the bridge between the virtual representation of a user interface created with React components and the actual HTML elements that are displayed in a web browser.
+
+
+(6)What are the packages that you need to import for react to work with?
+=> Two package is most important First is React Package : https://www.unpkg.com/react@18.2.0/umd/react.development.js
+Second is React DOM Package : https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js
+Third is Babel package : "https://unpkg.com/@babel/standalone/babel.min.js"
+
+
+(7)How do you add react to a web application?
+=> Maybe using packages i can add react web application but there is some best methods to add react this is download node js and then install npm and i can use like this command npm create-react-app my-react-app
+
+
+
+(8)What is React.createElement?
+This method doesn’t directly create a DOM element. Instead, it describes what the UI should look like using these elements.In simple words, react elements are the instructions for how the browser DOM should be created.  We create the react elements using the below syntax by embedding HTML elements in JavaScript to display the content on the screen. syntax is React.createElement(type,{props},children);
+
+
+(9)What are the three properties that createElement accept?
+=> React.createElement() takes three arguments.----> They are:
+type: the type of the HTML element (h1,p,button).
+props: properties of the object({style:{size:10px}} or Eventhandlers, classNames,etc).
+children: anything that need to be displayed on the screen.
+
+
+(10) What is the meaning of render and root?
+=> Render:
+    Render is a general term used in web development to describe the process of generating and displaying content on a web page. It involves converting data or components into a visual representation that the user can see and interact with.(Render can only keep one element in paranthises)
+Root:
+    Root typically refers to the HTML element in your web page where your React application will be rendered. It's the starting point for your React application to attach itself to the DOM.

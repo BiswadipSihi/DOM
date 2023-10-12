@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React App</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script 
+        crossorigin 
+        src="https://unpkg.com/react@18/umd/react.development.js">
+    </script>
+    <script 
+        crossorigin 
+        src="https://unpkg.com/react-dom@18/umd/react-dom.development.js">
+    </script>
+    <script 
+        src="https://unpkg.com/@babel/standalone/babel.min.js">
+    </script>
+    <script type="text/babel">
+        const main =document.getElementById("root");
+        // let heading1 = React.createElement("h1",{},"Heading1");
+        // let heading3 = React.createElement("h3",{},"Heading3");
+        // let myDiv = React.createElement("div",{},[heading1,heading2]);// here  i use React.createElement 
+        let heading =(
+        <>
+            <h1>Heading1</h1>
+            <h2>Heading2</h2>
+            <p>This is my first react app on vs code.</p>
+        </>)//here i use fragment for selecting multipule item & i  use babel. babel transform this code in Jsx 
+        let rootElement = ReactDOM.createRoot(main);
+        rootElement.render(heading);
+        // rootElement.render(myDiv);
+    </script>
+</body>
+</html>
+<!-- that's all about i know the React APP -->
